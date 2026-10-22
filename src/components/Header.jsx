@@ -1,7 +1,7 @@
 import { useTheme } from '../context/ThemeContext.jsx'
 import { useLanguage } from '../context/LanguageContext.jsx'
 
-export default function Header({ onHome }) {
+export default function Header({ onHome, onOpenSearch }) {
   const { theme, toggleTheme } = useTheme()
   const { lang, setLang, t } = useLanguage()
 
@@ -13,6 +13,9 @@ export default function Header({ onHome }) {
           <span className="brand-name">{t('appTitle')}</span>
         </button>
         <div className="topbar-actions">
+          <button className="search-toggle" onClick={onOpenSearch} title={t('searchTitle')}>
+            🔍 <span className="search-toggle-text">{t('browseBooks')}</span>
+          </button>
           <div className="lang-toggle" role="group" aria-label="Language">
             <button
               className={lang === 'en' ? 'lang-btn active' : 'lang-btn'}

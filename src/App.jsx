@@ -4,12 +4,13 @@ import Home from './components/Home.jsx'
 import ClassView from './components/ClassView.jsx'
 import SubjectView from './components/SubjectView.jsx'
 import BookView from './components/BookView.jsx'
+import SearchView from './components/SearchView.jsx'
 import PdfViewer from './components/PdfViewer.jsx'
 import Header from './components/Header.jsx'
 
 export default function App() {
   const [view, setView] = useState({
-    page: 'home', // home | class | subject | book | reader
+    page: 'home', // home | class | subject | book | search | reader
     classId: null,
     subjectId: null,
     bookId: null,
@@ -25,6 +26,8 @@ export default function App() {
     setView({ page: 'subject', classId, subjectId, bookId: null, pdfTitle: '', pdfUrl: '' })
   const goToBook = (classId, subjectId, bookId) =>
     setView({ page: 'book', classId, subjectId, bookId, pdfTitle: '', pdfUrl: '' })
+  const goToSearch = () =>
+    setView((v) => ({ ...v, page: 'search' }))
   const goToPdf = (title, pdfUrl) =>
     setView((v) => ({ ...v, page: 'reader', pdfTitle: title, pdfUrl }))
 
@@ -34,7 +37,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header onHome={goHome} />
+      <Header onHome={goHome} onOpenSearch={goToSearch} />
       <main className="container">
         {view.page === 'home' && <Home onSelectClass={goToClass} />}
         {view.page === 'class' && classData && (
@@ -55,6 +58,12 @@ export default function App() {
             book={bookData}
             onBack={() => goToSubject(view.classId, view.subjectId)}
             onOpenPdf={goToPdf}
+          />
+        )}
+        {view.page === 'search' && (
+          <SearchView
+            onOpenBook={(classId, subjectId, bookId) => goToBook(classId, subjectId, bookId)}
+            onBack={goHome}
           />
         )}
         {view.page === 'reader' && (

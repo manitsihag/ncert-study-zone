@@ -1,9 +1,11 @@
 import { useTheme } from '../context/ThemeContext.jsx'
 import { useLanguage } from '../context/LanguageContext.jsx'
+import { useIsMobile } from '../hooks/useMediaQuery.js'
 
 export default function Header({ onHome, onOpenSearch }) {
   const { theme, toggleTheme } = useTheme()
   const { lang, setLang, t } = useLanguage()
+  const isMobile = useIsMobile()
 
   return (
     <header className="topbar">
@@ -12,10 +14,10 @@ export default function Header({ onHome, onOpenSearch }) {
           <span className="brand-logo">📚</span>
           <span className="brand-name">{t('appTitle')}</span>
         </button>
+        <button className="search-toggle" onClick={onOpenSearch} title={t('searchTitle')}>
+          🔍 <span className="search-toggle-text">{t('searchBooks')}</span>
+        </button>
         <div className="topbar-actions">
-          <button className="search-toggle" onClick={onOpenSearch} title={t('searchTitle')}>
-            🔍 <span className="search-toggle-text">{t('browseBooks')}</span>
-          </button>
           <div className="lang-toggle" role="group" aria-label="Language">
             <button
               className={lang === 'en' ? 'lang-btn active' : 'lang-btn'}

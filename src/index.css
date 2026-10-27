@@ -891,4 +891,111 @@ body {
   .pdf-frame-wrap {
     height: 70vh;
   }
+
+  /* ---- Mobile: hide home title ---- */
+  @media (max-width: 767px) {
+    .home-title {
+      display: none;
+    }
+  }
+
+  /* ---- Desktop: class title centered on screen ---- */
+  @media (min-width: 768px) {
+    .page-title {
+      justify-content: center;
+    }
+  }
+
+  /* ---- Mobile: class title - only class name, no NCERT Books ---- */
+  @media (max-width: 767px) {
+    .mobile-class-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 12px 0 16px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .mobile-class-title span {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+  }
+
+  /* ---- Mobile: search button below language toggle ---- */
+  @media (max-width: 767px) {
+    .mobile-search-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-search-btn .search-toggle {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+  }
+
+  /* ---- Mobile: subject page buttons smaller ---- */
+  @media (max-width: 767px) {
+    .book-actions.mobile .btn {
+      font-size: 13px;
+      padding: 8px 14px;
+      min-width: 120px;
+    }
+  }
+
+  /* ---- Mobile: hide Download Full Book button ---- */
+  @media (max-width: 767px) {
+    .btn-download-full {
+      display: none;
+    }
+  }
+
+  /* ---- Desktop: class title centered ---- */
+  @media (min-width: 768px) {
+    .page-title {
+      justify-content: center;
+    }
+  }
 }
+
+  /* ---- Desktop: class title - only class name, centered ---- */
+  @media (min-width: 768px) {
+    .page-title.desktop {
+      justify-content: center;
+    }
+    .page-title.desktop .page-logo {
+      display: none;
+    }
+  }
+
+  /* ---- Desktop: book title centered ---- */
+  @media (min-width: 768px) {
+    .book-header {
+      justify-content: center;
+      gap: 24px;
+    }
+    .book-title {
+      text-align: center;
+      flex: 1;
+    }
+  }
+
+  /* ---- Desktop: hide Download Full Book button ---- */
+  @media (min-width: 768px) {
+    .btn-download-full {
+      display: none;
+    }
+  }
+}
+
+
+
+

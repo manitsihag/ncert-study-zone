@@ -1,7 +1,9 @@
 import { useLanguage } from '../context/LanguageContext.jsx'
+import { useIsMobile } from '../hooks/useMediaQuery.js'
 
 export default function ClassView({ classData, onBack, onSelectSubject }) {
   const { lang, t } = useLanguage()
+  const isMobile = useIsMobile()
 
   return (
     <section className="class-view">
@@ -9,12 +11,16 @@ export default function ClassView({ classData, onBack, onSelectSubject }) {
         ← {t('back')}
       </button>
 
-      <div className="page-heading">
-        <h1 className="page-title">
-          <span className="page-logo">📚</span> {t('appTitle')} — {t('classLabel')(classData.classNumber)}
-        </h1>
-        <p className="page-subtitle">{t('chooseSubject')}</p>
-      </div>
+      {isMobile ? (
+        <div className="mobile-class-title">
+          <span>{t('classLabel')(classData.classNumber)}</span>
+        </div>
+      ) : (
+        <div className="page-heading">
+          <h1 className="page-title">{t('classLabel')(classData.classNumber)}</h1>
+          <p className="page-subtitle">{t('chooseSubject')}</p>
+        </div>
+      )}
 
       <div className="subject-grid">
         {classData.subjects.map((s) => (

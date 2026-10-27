@@ -1,7 +1,9 @@
 import { useLanguage } from '../context/LanguageContext.jsx'
+import { useIsMobile } from '../hooks/useMediaQuery.js'
 
 export default function SubjectView({ classData, subject, onBack, onSelectBook }) {
   const { lang, t } = useLanguage()
+  const isMobile = useIsMobile()
 
   return (
     <section className="subject-view">
@@ -37,7 +39,7 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
               <h3 className="book-name">{b.name[lang]}</h3>
               <p className="book-meta">📄 {b.chapters.length} {t('chapters')}</p>
             </div>
-            <div className="book-actions">
+            <div className={`book-actions ${isMobile ? 'mobile' : ''}`}>
               <span className="btn btn-open">
                 📖 {t('open')}
               </span>

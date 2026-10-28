@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #f8f9fc;
   --surface: #ffffff;
   --surface-2: #f1f4f9;
@@ -161,7 +161,7 @@ body {
 
 /* ---------- Home ---------- */
 .home {
-  padding: 30px 0 60px;
+  padding: 16px 0 60px;
   text-align: center;
 }
 
@@ -181,8 +181,8 @@ body {
 
 .home-subtitle {
   color: var(--text-secondary);
-  font-size: 17px;
-  margin-bottom: 44px;
+  font-size: 16px;
+  margin-bottom: 28px;
 }
 
 .class-grid {
@@ -339,13 +339,18 @@ body {
 }
 
 /* ---------- Subject view / book list ---------- */
+.subject-meta {
+  margin: 0 0 4px;
+}
+
 .subject-view .page-heading {
-  text-align: left;
-  margin: 8px 0 28px;
+  text-align: center;
+  margin: 28px 0 40px;
 }
 
 .subject-view .page-title {
-  justify-content: flex-start;
+  justify-content: center;
+  font-size: 40px;
 }
 
 .book-list {
@@ -827,23 +832,228 @@ body {
   font-size: 16px;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Mobile Header/Search (as per design) ---------- */
+.mobile-search-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 10px;
+}
+
+.mobile-search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.mobile-search-icon {
+  font-size: 18px;
+}
+
+.mobile-search-text {
+  color: var(--text-secondary);
+}
+
+.theme-segment {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.theme-seg-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-seg-btn.active {
+  background: #111827;
+  color: #fff;
+}
+
+[data-theme='dark'] .theme-seg-btn.active {
+  background: #0b1020;
+}
+
 @media (max-width: 640px) {
+  .topbar-inner {
+    gap: 10px;
+  }
+
+  .brand {
+    font-size: 18px;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    font-size: 22px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-name {
+    display: none !important;
+  }
+}
+}
+
+  .lang-toggle {
+    gap: 6px;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    text-align: left;
+  }
+
+  .lang-globe {
+    font-size: 16px;
+  }
+
+  .lang-stack {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .lang-top {
+    font-size: 9px;
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  .lang-bottom {
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .lang-btn.active {
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  .theme-seg-btn {
+    width: 36px;
+    height: 36px;
+  }
+
   .home-title {
-    font-size: 26px;
+    display: flex;
+    font-size: 30px;
+    margin-top: 4px;
+  }
+
+  .home-subtitle {
+    margin-bottom: 24px;
+  }
+
+  .class-view .page-heading {
+    text-align: center;
+    margin: 12px 0 18px;
+  }
+
+  .class-view .page-title {
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .class-view .page-subtitle {
+    display: block;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  .subject-view .page-heading {
+    text-align: center;
+    margin: 16px 0 24px;
+  }
+
+  .subject-view .page-title {
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .subject-view .subject-meta {
+    margin-top: 4px;
   }
 
   .class-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .class-card {
+    padding: 18px 12px 16px;
+    border-radius: 14px;
+    gap: 6px;
   }
 
   .class-number {
-    font-size: 40px;
+    font-size: 48px;
+  }
+
+  .class-label {
+    font-size: 15px;
+  }
+
+  .class-badge {
+    font-size: 11px;
+    padding: 4px 12px;
   }
 
   .subject-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .subject-card {
+    padding: 18px 12px 16px;
+    border-radius: 14px;
+    gap: 8px;
+  }
+
+  .subject-icon {
+    font-size: 38px;
+  }
+
+  .subject-name {
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .subject-count {
+    font-size: 12px;
   }
 
   .book-row {
@@ -892,11 +1102,26 @@ body {
     height: 70vh;
   }
 
-  /* ---- Mobile: hide home title ---- */
-  @media (max-width: 767px) {
-    .home-title {
-      display: none;
-    }
+  /* ---- Mobile: subject page buttons smaller ---- */
+  .book-actions.mobile .btn {
+    font-size: 13px;
+    padding: 8px 14px;
+    min-width: 120px;
+  }
+
+  /* ---- Mobile: hide Download Full Book button ---- */
+  .btn-download-full {
+    display: none;
+  }
+
+  .home-title {
+    display: flex;
+    font-size: 30px;
+    margin-top: 4px;
+  }
+
+  .home-subtitle {
+    margin-bottom: 24px;
   }
 
   /* ---- Desktop: class title centered on screen ---- */
@@ -905,57 +1130,9 @@ body {
       justify-content: center;
     }
   }
-
-  /* ---- Mobile: class title - only class name, no NCERT Books ---- */
-  @media (max-width: 767px) {
-    .mobile-class-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 12px 0 16px;
-      padding: 8px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-    }
-    .mobile-class-title span {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-    }
-  }
-
-  /* ---- Mobile: search button below language toggle ---- */
-  @media (max-width: 767px) {
-    .mobile-search-btn {
-      width: 100%;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-    }
-    .mobile-search-btn .search-toggle {
-      width: 100%;
-      justify-content: center;
-      padding: 14px 20px;
-      font-size: 15px;
-    }
-  }
-
-  /* ---- Mobile: subject page buttons smaller ---- */
-  @media (max-width: 767px) {
-    .book-actions.mobile .btn {
-      font-size: 13px;
-      padding: 8px 14px;
-      min-width: 120px;
-    }
-  }
-
-  /* ---- Mobile: hide Download Full Book button ---- */
-  @media (max-width: 767px) {
-    .btn-download-full {
-      display: none;
-    }
+  .lang-btn {
+    padding: 7px 12px;
+    font-size: 12px;
   }
 
   /* ---- Desktop: class title centered ---- */
@@ -966,36 +1143,46 @@ body {
   }
 }
 
-  /* ---- Desktop: class title - only class name, centered ---- */
-  @media (min-width: 768px) {
-    .page-title.desktop {
-      justify-content: center;
-    }
-    .page-title.desktop .page-logo {
-      display: none;
-    }
+/* ---- Desktop: class title - only class name, centered ---- */
+@media (min-width: 768px) {
+  .page-title.desktop {
+    justify-content: center;
   }
-
-  /* ---- Desktop: book title centered ---- */
-  @media (min-width: 768px) {
-    .book-header {
-      justify-content: center;
-      gap: 24px;
-    }
-    .book-title {
-      text-align: center;
-      flex: 1;
-    }
-  }
-
-  /* ---- Desktop: hide Download Full Book button ---- */
-  @media (min-width: 768px) {
-    .btn-download-full {
-      display: none;
-    }
+  .page-title.desktop .page-logo {
+    display: none;
   }
 }
 
+/* ---- Desktop: book title centered ---- */
+@media (min-width: 768px) {
+  .book-header {
+    justify-content: center;
+    gap: 24px;
+  }
+  .book-title {
+    text-align: center;
+    flex: 1;
+  }
+}
 
+/* ---- Desktop: hide Download Full Book button ---- */
+@media (min-width: 768px) {
+  .btn-download-full {
+    display: none;
+  }
+}
 
+  .mobile-hide {
+    display: none !important;
+  }
+}
 
+/* Mobile only hide */
+@media (max-width: 767px) {
+  .class-view .back-btn.mobile-hide {
+    display: none !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+}

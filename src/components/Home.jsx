@@ -38,7 +38,7 @@ export default function Home({ onSelectClass }) {
               <span className="class-number" style={{ color: numberColor }}>
                 {c.classNumber}
               </span>
-              <span className="class-label">{t('classLabel')(c.classNumber)}</span>
+              <span className="class-label">{t('homeClassLabel')(c.classNumber)}</span>
               <span className="class-badge" style={badgeStyle}>
                 {t('available')}
               </span>

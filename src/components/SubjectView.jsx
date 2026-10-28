@@ -11,13 +11,12 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
         ← {t('back')}
       </button>
 
+      <p className="page-subtitle subject-meta">
+        <span className="subject-chip">{subject.icon} {subject.name[lang]}</span>
+      </p>
+
       <div className="page-heading">
-        <h1 className="page-title">
-          <span className="page-logo">📚</span> {t('appTitle')} — Class {classData.classNumber}
-        </h1>
-        <p className="page-subtitle">
-          <span className="subject-chip">{subject.icon} {subject.name[lang]}</span>
-        </p>
+        <h1 className="page-title">{t('classLabel')(classData.classNumber)}</h1>
       </div>
 
       <div className="book-list">

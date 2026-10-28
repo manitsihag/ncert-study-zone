@@ -22,21 +22,37 @@ export default function BookView({ classData, subject, book, onBack, onOpenPdf }
       <div className="chapters-card">
         <h2 className="chapters-title">{t('chapters')}</h2>
         <ol className="chapter-list">
-          {book.chapters.map((ch, i) => (
-            <li key={i} className="chapter-item">
-              <span className="chapter-number">{i + 1}</span>
-              <span className="chapter-name">{ch[lang]}</span>
-              <a
-                className="chapter-open-btn"
-                href={book.pdfUrl}
-                target="_blank"
-                rel="noreferrer"
+          {book.chapters.map((ch, i) => {
+            const openPdf = () => window.open(book.pdfUrl, '_blank', 'noopener,noreferrer')
+            return (
+              <li
+                key={i}
+                className="chapter-item"
+                onClick={isMobile ? openPdf : undefined}
+                role={isMobile ? 'button' : undefined}
+                tabIndex={isMobile ? 0 : undefined}
+                onKeyDown={isMobile ? (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    openPdf()
+                  }
+                } : undefined}
               >
-                📄 {t('open')}
-              </a>
-              <span className="chapter-arrow">→</span>
-            </li>
-          ))}
+                <span className="chapter-number">{i + 1}</span>
+                <span className="chapter-name">{ch[lang]}</span>
+                <a
+                  className="chapter-open-btn"
+                  href={book.pdfUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => isMobile && e.stopPropagation()}
+                >
+                  📄 {t('open')}
+                </a>
+                <span className="chapter-arrow">→</span>
+              </li>
+            )
+          })}
         </ol>
       </div>
     </section>

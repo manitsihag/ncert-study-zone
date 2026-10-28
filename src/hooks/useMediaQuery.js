@@ -17,7 +17,11 @@ export function useMediaQuery(query) {
 }
 
 export function useIsMobile() {
-  return useMediaQuery('(max-width: 767px)')
+  const q = '(max-width: 767px)'
+  const m = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(q).matches : false
+  // fallback for test viewport
+  const w = typeof window !== 'undefined' ? window.innerWidth : 1024
+  return w <= 767 || m
 }
 
 export function useIsDesktop() {

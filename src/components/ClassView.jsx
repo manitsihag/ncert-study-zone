@@ -5,12 +5,14 @@ export default function ClassView({ classData, onBack, onSelectSubject }) {
 
   return (
     <section className="class-view">
-      <button className="back-btn mobile-hide" onClick={onBack}>
+      <button className="back-btn" onClick={onBack}>
         ← {t('back')}
       </button>
 
       <div className="page-heading">
-        <h1 className="page-title">{t('classLabel')(classData.classNumber)}</h1>
+        <h1 className="page-title">
+          <span className="page-logo">📚</span> {t('appTitle')} — {t('classLabel')(classData.classNumber)}
+        </h1>
         <p className="page-subtitle">{t('chooseSubject')}</p>
       </div>
 

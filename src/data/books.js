@@ -4,6 +4,83 @@
 
 const pdf = (code) => `https://ncert.nic.in/textbook/pdf/${code}.pdf`
 
+// Official Hindi-medium NCERT editions, keyed by the English-medium book code.
+// Codes verified against ncert.nic.in. Subjects like English, Hindi and Sanskrit
+// do not need a separate medium, so they are not listed here.
+const hindiPdfCodes = {
+  // Class 6
+  fegp1: 'fhgp1', // Ganita Prakash
+  fecu1: 'fhcu1', // Curiosity / Jigyasa
+  fees1: 'fhes1', // Exploring Society
+  fekr1: 'fhkr1', // Kriti
+  // Class 7
+  gegp1: 'ghgp1',
+  gegp2: 'ghgp2',
+  gecu1: 'ghcu1',
+  gees1: 'ghes1',
+  gees2: 'ghes2',
+  gekr1: 'ghkr1',
+  // Class 8
+  hegp1: 'hhgp1',
+  hegp2: 'hhgp2',
+  hecu1: 'hhcu1',
+  hees1: 'hhes1',
+  hekr1: 'hhkr1',
+  // Class 9
+  iemh1: 'ihmh1',
+  iesc1: 'ihsc1',
+  // Class 10
+  jemh1: 'jhmh1',
+  jesc1: 'jhsc1',
+  jess1: 'jhss1',
+  jess2: 'jhss2',
+  jess3: 'jhss3',
+  jess4: 'jhss4',
+  // Class 11
+  kemh1: 'khmh1',
+  keph1: 'khph1',
+  kech1: 'khch1',
+  kebo1: 'khbo1',
+  kehs1: 'khhs1',
+  kegy1: 'khgy1',
+  kegy2: 'khgy2',
+  keps1: 'khps1',
+  keps2: 'khps2',
+  keec1: 'khec1',
+  kesy1: 'khsy1',
+  kesy2: 'khsy2',
+  // Class 12
+  lemh1: 'lhmh1',
+  leph1: 'lhph1',
+  lech1: 'lhch1',
+  lebo1: 'lhbo1',
+  lehs1: 'lhhs1',
+  lehs2: 'lhhs2',
+  lehs3: 'lhhs3',
+  legy1: 'lhgy1',
+  legy2: 'lhgy2',
+  leps1: 'lhps1',
+  leps2: 'lhps2',
+  leec1: 'lhec1',
+  leec2: 'lhec2',
+  lesy1: 'lhsy1',
+  lesy2: 'lhsy2',
+}
+
+const bookCode = (pdfUrl) => pdfUrl.match(/\/([a-z0-9]+)ps\.pdf$/)?.[1]
+
+// Book PDF for the chosen medium. Falls back to English when NCERT has not
+// published a Hindi edition of that particular book yet.
+export function getBookPdf(book, medium = 'en') {
+  if (medium !== 'hi') return book.pdfUrl
+  const hindiCode = hindiPdfCodes[bookCode(book.pdfUrl)]
+  return hindiCode ? pdf(`${hindiCode}ps`) : book.pdfUrl
+}
+
+export function hasHindiPdf(book) {
+  return Boolean(hindiPdfCodes[bookCode(book.pdfUrl)])
+}
+
 export const classes = [
   {
     classNumber: 6,
@@ -678,7 +755,7 @@ export const classes = [
           {
             id: 'maths',
             name: { en: 'Mathematics', hi: 'गणित' },
-            pdfUrl: pdf('jemh1ps'),
+            pdfUrl: pdf('iemh1ps'),
             chapters: [
               { en: 'Number Systems', hi: 'संख्या पद्धति' },
               { en: 'Polynomials', hi: 'बहुपद' },
@@ -704,7 +781,7 @@ export const classes = [
           {
             id: 'science',
             name: { en: 'Science', hi: 'विज्ञान' },
-            pdfUrl: pdf('jesc1ps'),
+            pdfUrl: pdf('iesc1ps'),
             chapters: [
               { en: 'Matter in Our Surroundings', hi: 'हमारे आस-पास का पदार्थ' },
               { en: 'Is Matter Around Us Pure', hi: 'क्या हमारे आस-पास का पदार्थ शुद्ध है' },
@@ -851,7 +928,7 @@ export const classes = [
           {
             id: 'footprints',
             name: { en: 'Footprints Without Feet', hi: 'फुटप्रिंट्स विदाउट फीट' },
-            pdfUrl: pdf('jefb1ps'),
+            pdfUrl: pdf('jefp1ps'),
             chapters: [
               { en: 'A Triumph of Surgery', hi: 'सर्जरी की एक विजय' },
               { en: "The Thief's Story", hi: 'चोर की कहानी' },

@@ -30,6 +30,9 @@ export default function BookView({ classData, book, onBack, onOpenPdf }) {
           </button>
         )}
         <h1 className="book-title">{book.name[lang]}</h1>
+        <a className="btn btn-download" href={pdfUrl} download>
+          ⬇ {t('download')}
+        </a>
       </div>
 
       <div className="book-meta-row">

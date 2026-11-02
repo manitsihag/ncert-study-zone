@@ -28,6 +28,19 @@ export default function MobileBookPicker({ onOpenBook }) {
     setBookValue('')
   }
 
+  const bookOptions = []
+  selectedSubject?.books.forEach((b) => {
+    bookOptions.push({ value: b.id, label: b.name[lang], hindi: false })
+    // Hindi editions as separate book entries.
+    if (hasHindiPdf(b)) {
+      bookOptions.push({ value: `${b.id}__hi`, label: `${b.name[lang]} (हिन्दी)`, hindi: true })
+    }
+  })
+  const sortedBookOptions = bookOptions.sort((a, b) => {
+    if (a.hindi === b.hindi) return 0
+    return a.hindi ? 1 : -1
+  })
+
   const handleBookChange = (event) => {
     const value = event.target.value
     // Reset so the picker shows the placeholder again for the next pick.
@@ -112,22 +125,11 @@ export default function MobileBookPicker({ onOpenBook }) {
               <option value="">
                 {selectedSubject ? t('selectBookOption') : t('selectSubjectFirst')}
               </option>
-              {selectedSubject?.books.flatMap((b) => {
-                const options = [
-                  <option key={b.id} value={b.id}>
-                    {b.name[lang]}
-                  </option>,
-                ]
-                // Hindi editions as separate book entries.
-                if (hasHindiPdf(b)) {
-                  options.push(
-                    <option key={`${b.id}__hi`} value={`${b.id}__hi`}>
-                      {b.name[lang]} (हिन्दी)
-                    </option>,
-                  )
-                }
-                return options
-              })}
+              {sortedBookOptions.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>

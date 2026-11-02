@@ -14,6 +14,14 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
   const showSubjectFallback =
     medium === 'hi' && !isLanguageSubject && !subjectHasHindi
 
+  // English-medium books first, Hindi-medium books below (stable order).
+  const sortedBooks = [...subject.books].sort((a, b) => {
+    const aHindi = hasHindiPdf(a)
+    const bHindi = hasHindiPdf(b)
+    if (aHindi === bHindi) return 0
+    return aHindi ? 1 : -1
+  })
+
   return (
     <section className="subject-view">
       <div className="view-topbar">
@@ -39,7 +47,7 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
       )}
 
       <div className="book-list">
-        {subject.books.map((b) => {
+        {sortedBooks.map((b) => {
           const hindi = hasHindiPdf(b)
           const isHindiBook = subject.id === 'hindi'
           const isSanskritBook = subject.id === 'sanskrit'

@@ -21,6 +21,16 @@ export default function BookView({ classData, book, onBack, onOpenPdf }) {
 
   const pdfUrl = getBookPdf(book, medium)
 
+  const handleDownloadFullBook = () => {
+    const link = document.createElement('a')
+    link.href = pdfUrl
+    link.rel = 'noopener noreferrer'
+    link.download = 'ncert-full-book.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <section className="book-view">
       <div className="book-header">
@@ -30,9 +40,9 @@ export default function BookView({ classData, book, onBack, onOpenPdf }) {
           </button>
         )}
         <h1 className="book-title">{book.name[lang]}</h1>
-        <a className="btn btn-download" href={pdfUrl} download>
+        <button type="button" className="btn btn-download" onClick={handleDownloadFullBook}>
           ⬇ {t('download')}
-        </a>
+        </button>
       </div>
 
       <div className="book-meta-row">

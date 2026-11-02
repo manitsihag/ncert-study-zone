@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { classes } from '../data/books.js'
+import { classes, hasHindiPdf } from '../data/books.js'
 import { useLanguage } from '../context/LanguageContext.jsx'
+import { useMedium } from '../context/MediumContext.jsx'
 
 export default function MobileBookPicker({ onOpenBook }) {
   const { lang, t } = useLanguage()
+  const { setMedium } = useMedium()
   const [classValue, setClassValue] = useState('')
   const [subjectValue, setSubjectValue] = useState('')
   const [bookValue, setBookValue] = useState('')
@@ -28,10 +30,20 @@ export default function MobileBookPicker({ onOpenBook }) {
 
   const handleBookChange = (event) => {
     const value = event.target.value
-    setBookValue(value)
+    // Reset so the picker shows the placeholder again for the next pick.
+    setBookValue('')
 
-    const book = selectedSubject?.books.find((b) => b.id === value)
+    if (!value) return
+    const isHindi = value.endsWith('__hi')
+    const bookId = isHindi ? value.slice(0, -4) : value
+
+    const book = selectedSubject?.books.find((b) => b.id === bookId)
     if (selectedClass && selectedSubject && book) {
+      // The book opens in a new tab which reads the medium from
+      // localStorage, so set it there directly before opening.
+      const medium = isHindi ? 'hi' : 'en'
+      localStorage.setItem('ncert-medium', medium)
+      setMedium(medium)
       onOpenBook(selectedClass.classNumber, selectedSubject.id, book.id)
     }
   }
@@ -100,11 +112,22 @@ export default function MobileBookPicker({ onOpenBook }) {
               <option value="">
                 {selectedSubject ? t('selectBookOption') : t('selectSubjectFirst')}
               </option>
-              {selectedSubject?.books.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.name[lang]}
-                </option>
-              ))}
+              {selectedSubject?.books.flatMap((b) => {
+                const options = [
+                  <option key={b.id} value={b.id}>
+                    {b.name[lang]}
+                  </option>,
+                ]
+                // Hindi editions as separate book entries.
+                if (hasHindiPdf(b)) {
+                  options.push(
+                    <option key={`${b.id}__hi`} value={`${b.id}__hi`}>
+                      {b.name[lang]} (हिन्दी)
+                    </option>,
+                  )
+                }
+                return options
+              })}
             </select>
           </div>
         </div>

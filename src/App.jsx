@@ -6,6 +6,7 @@ import SubjectView from './components/SubjectView.jsx'
 import BookView from './components/BookView.jsx'
 import SearchView from './components/SearchView.jsx'
 import PdfViewer from './components/PdfViewer.jsx'
+import About from './components/About.jsx'
 import Header from './components/Header.jsx'
 import { useMediaQuery } from './hooks/useMediaQuery.js'
 
@@ -58,13 +59,19 @@ function getInitialView(isMobile) {
   return empty
 }
 
-function getBookUrl(classId, subjectId, bookId) {
+function getBookUrl(classId, subjectId, bookId, medium) {
   const url = new URL(window.location.href)
   url.search = ''
   url.hash = ''
   url.searchParams.set('class', classId)
   url.searchParams.set('subject', subjectId)
   url.searchParams.set('book', bookId)
+  // Hindi books opened in a new tab carry their medium and display
+  // language in the URL. English is the default everywhere else.
+  if (medium === 'hi') {
+    url.searchParams.set('medium', 'hi')
+    url.searchParams.set('lang', 'hi')
+  }
   return url.toString()
 }
 
@@ -103,8 +110,8 @@ export default function App() {
     setView({ page: 'book', classId, subjectId, bookId, bookOrigin: origin, pdfTitle: '', pdfUrl: '' })
   const goToBookFromMobileSearch = (classId, subjectId, bookId) =>
     goToBook(classId, subjectId, bookId, 'home')
-  const openBookInNewTab = (classId, subjectId, bookId) => {
-    window.open(getBookUrl(classId, subjectId, bookId), '_blank', 'noopener')
+  const openBookInNewTab = (classId, subjectId, bookId, medium) => {
+    window.open(getBookUrl(classId, subjectId, bookId, medium), '_blank', 'noopener')
   }
   const goToSearch = () =>
     setView((v) => ({ ...v, page: 'search', bookOrigin: null }))
@@ -132,6 +139,7 @@ export default function App() {
           ) : (
             <Home onSelectClass={goToClass} />
           ))}
+        {view.page === 'home' && <About />}
         {view.page === 'class' && classData && (
           <ClassView classData={classData} onBack={goHome} onSelectSubject={goToSubject} />
         )}

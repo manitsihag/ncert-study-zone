@@ -1,21 +1,16 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const MediumContext = createContext()
 
-// Book medium is separate from the UI language: a student can keep the
-// interface in English but read Hindi-medium books (or the other way round).
+// Book medium is separate from the UI language, but every fresh opening of
+// the website always starts in English. A Hindi book opened from the search
+// picker in a new tab carries its medium via the URL (?medium=hi), so only
+// that specific tab starts in Hindi medium.
 export function MediumProvider({ children }) {
   const [medium, setMedium] = useState(() => {
-    return (
-      localStorage.getItem('ncert-medium') ||
-      localStorage.getItem('ncert-lang') ||
-      'en'
-    )
+    const fromUrl = new URLSearchParams(window.location.search).get('medium')
+    return fromUrl === 'hi' ? 'hi' : 'en'
   })
-
-  useEffect(() => {
-    localStorage.setItem('ncert-medium', medium)
-  }, [medium])
 
   return (
     <MediumContext.Provider value={{ medium, setMedium }}>

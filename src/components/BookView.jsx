@@ -1,7 +1,10 @@
 import { useLanguage } from '../context/LanguageContext.jsx'
 import { useMedium } from '../context/MediumContext.jsx'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
-import { getBookPdf } from '../data/books.js'
+import { getBookPdf, getBookZipUrl, hasHindiPdf } from '../data/books.js'
+import MediumToggle from './MediumToggle.jsx'
+
+const LANGUAGE_SUBJECTS = ['english', 'hindi', 'sanskrit']
 
 // Generate chapter-wise PDF URL from book PDF URL
 // e.g., jeff1ps.pdf -> jeff101.pdf (chapter 1), jeff102.pdf (chapter 2)
@@ -14,12 +17,19 @@ function getChapterPdfUrl(bookPdfUrl, chapterNum) {
   return `https://ncert.nic.in/textbook/pdf/${code}${part}${chapter}.pdf`
 }
 
-export default function BookView({ classData, book, onBack, onOpenPdf }) {
+export default function BookView({ classData, subject, book, onBack, onOpenPdf }) {
   const { lang, t } = useLanguage()
   const { medium } = useMedium()
   const isMobile = useMediaQuery('(max-width: 767px)')
 
+  const isLanguageSubject = LANGUAGE_SUBJECTS.includes(subject.id)
+  const hindiAvailable = hasHindiPdf(book)
+  const showFallback = medium === 'hi' && !isLanguageSubject && !hindiAvailable
+
   const pdfUrl = getBookPdf(book, medium)
+  // Same URL as NCERT's official site "Download complete book" button (ZIP).
+  // Follows the selected medium: Hindi medium downloads the Hindi edition.
+  const zipUrl = getBookZipUrl(book, medium)
 
   return (
     <section className="book-view">
@@ -30,11 +40,19 @@ export default function BookView({ classData, book, onBack, onOpenPdf }) {
           </button>
         )}
         <h1 className="book-title">{book.name[lang]}</h1>
-        {/* Direct link — exactly like NCERT's official "Download complete book" */}
-        <a className="btn btn-download" href={pdfUrl}>
+        {!isLanguageSubject && !isMobile && <MediumToggle />}
+        {/* Same URL as NCERT's official "Download complete book" (ZIP) —
+            browsers always download ZIP files, they cannot open them inline */}
+        <a className="btn btn-download" href={zipUrl}>
           ⬇ {t('download')}
         </a>
       </div>
+
+      {showFallback && (
+        <div className="medium-bar">
+          <p className="medium-note">⚠️ {t('hindiFallback')}</p>
+        </div>
+      )}
 
       <div className="book-meta-row">
         <span className="meta-badge">📄 {book.chapters.length} {t('chapters')}</span>

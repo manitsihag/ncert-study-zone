@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext.jsx'
 import { useMedium } from '../context/MediumContext.jsx'
 
 export default function MobileBookPicker({ onOpenBook }) {
-  const { lang, t } = useLanguage()
+  const { lang, t, setLang } = useLanguage()
   const { setMedium } = useMedium()
   const [classValue, setClassValue] = useState('')
   const [subjectValue, setSubjectValue] = useState('')
@@ -52,12 +52,13 @@ export default function MobileBookPicker({ onOpenBook }) {
 
     const book = selectedSubject?.books.find((b) => b.id === bookId)
     if (selectedClass && selectedSubject && book) {
-      // The book opens in a new tab which reads the medium from
-      // localStorage, so set it there directly before opening.
+      // The book opens in a new tab which starts in English. A Hindi
+      // edition entry carries its medium through the URL so only that
+      // tab shows the Hindi book with everything in Hindi.
       const medium = isHindi ? 'hi' : 'en'
-      localStorage.setItem('ncert-medium', medium)
       setMedium(medium)
-      onOpenBook(selectedClass.classNumber, selectedSubject.id, book.id)
+      setLang(medium)
+      onOpenBook(selectedClass.classNumber, selectedSubject.id, book.id, medium)
     }
   }
 

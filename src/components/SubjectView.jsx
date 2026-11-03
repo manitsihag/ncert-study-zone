@@ -1,6 +1,6 @@
 import { useLanguage } from '../context/LanguageContext.jsx'
 import { useMedium } from '../context/MediumContext.jsx'
-import { getBookPdf, hasHindiPdf } from '../data/books.js'
+import { getBookPdf, getBookZipUrl, hasHindiPdf } from '../data/books.js'
 import MediumToggle from './MediumToggle.jsx'
 
 const LANGUAGE_SUBJECTS = ['english', 'hindi', 'sanskrit']
@@ -54,6 +54,8 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
           const showFallback =
             medium === 'hi' && !isLanguageSubject && !hindi
           const pdfUrl = getBookPdf(b, medium)
+          // Same URL as NCERT's official "Download complete book" (ZIP).
+          const zipUrl = getBookZipUrl(b, medium)
 
           return (
             <div
@@ -94,8 +96,7 @@ export default function SubjectView({ classData, subject, onBack, onSelectBook }
                 </span>
                 <a
                   className="btn btn-download"
-                  href={pdfUrl}
-                  download
+                  href={zipUrl}
                   onClick={(e) => e.stopPropagation()}
                 >
                   ⬇ {t('download')}

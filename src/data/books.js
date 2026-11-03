@@ -81,6 +81,22 @@ export function hasHindiPdf(book) {
   return Boolean(hindiPdfCodes[bookCode(book.pdfUrl)])
 }
 
+// NCERT's official "Download complete book" button links to a ZIP archive
+// (<code>dd.zip), not a PDF. Browsers cannot render ZIP files inline, so
+// every browser — mobile, desktop, in-app — always downloads it. This is
+// exactly how the download works on ncert.nic.in itself.
+const completeZipUrl = (code) => `https://ncert.nic.in/textbook/pdf/${code}dd.zip`
+
+// Complete-book ZIP for the chosen medium. Falls back to the English ZIP
+// when NCERT has not published a Hindi edition of that particular book.
+// ZIP URLs verified live for every book code used by the app.
+export function getBookZipUrl(book, medium = 'en') {
+  const code = bookCode(book.pdfUrl)
+  if (!code) return book.pdfUrl
+  const hindiCode = medium === 'hi' ? hindiPdfCodes[code] : undefined
+  return completeZipUrl(hindiCode || code)
+}
+
 export const classes = [
   {
     classNumber: 6,

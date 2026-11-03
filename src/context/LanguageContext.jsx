@@ -88,13 +88,16 @@ const strings = {
 }
 
 export function LanguageProvider({ children }) {
+  // Every fresh opening of the website starts in English. A Hindi book
+  // opened from the mobile search picker in a new tab carries
+  // ?lang=hi in its URL, so only that specific tab starts in Hindi.
   const [lang, setLang] = useState(() => {
-    return localStorage.getItem('ncert-lang') || 'en'
+    const fromUrl = new URLSearchParams(window.location.search).get('lang')
+    return fromUrl === 'hi' ? 'hi' : 'en'
   })
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', lang)
-    localStorage.setItem('ncert-lang', lang)
   }, [lang])
 
   const t = (key) => strings[lang][key] ?? strings.en[key] ?? key

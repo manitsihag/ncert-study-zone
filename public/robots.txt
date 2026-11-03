@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ncert-study-zone1.web.app/sitemap.xml
